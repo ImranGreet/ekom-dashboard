@@ -1,0 +1,64 @@
+// Generate margin utilities
+@for $i from 0 through $max-margin {
+  .m-#{$i} {
+    margin: #{$i}px;
+  }
+  .mt-#{$i} {
+    margin-top: #{$i}px;
+  }
+  .mr-#{$i} {
+    margin-right: #{$i}px;
+  }
+  .mb-#{$i} {
+    margin-bottom: #{$i}px;
+  }
+  .ml-#{$i} {
+    margin-left: #{$i}px;
+  }
+}
+
+
+// Generate padding utilities
+
+@for $i from 0 through $max-padding {
+  .p-#{$i} {
+    padding: #{$i}px;
+  }
+  .pt-#{$i} {
+    padding-top: #{$i}px;
+  }
+  .pr-#{$i} {
+    padding-right: #{$i}px;
+  }
+  .pb-#{$i} {
+    padding-bottom: #{$i}px;
+  }
+  .pl-#{$i} {
+    padding-left: #{$i}px;
+  }
+}
+
+
+
+// top,bottom,right,left
+@include generate-spacing('top');
+@include generate-spacing('bottom');
+@include generate-spacing('right');
+@include generate-spacing('left');
+
+// Extend in a utility container or globally
+.position {
+  @extend %position-utility;
+}
+
+$offset: 250px;
+
+.element {
+  width: calc(100vw - #{$offset});
+}
+.sidebar-width
+{
+width: $offset;
+}
+
+

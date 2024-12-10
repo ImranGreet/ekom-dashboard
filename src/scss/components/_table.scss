@@ -1,0 +1,105 @@
+.order-table {
+  width: 100%;
+  overflow-x: auto;
+  background: linear-gradient(145deg, #ffffff, #f7f8fa);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      // background: linear-gradient(135deg, #3182ce, #63b3ed);
+      // color: #ffffff;
+
+      th {
+        padding: 1rem;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-align: left;
+        border-bottom: 2px solid #cbd5e0;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background-color 0.3s, box-shadow 0.3s;
+
+        &:hover {
+          background-color: #f7fafc;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        td {
+          padding: 1rem;
+          font-size: 0.875rem;
+          color: #4a5568;
+          border-bottom: 1px solid #e2e8f0;
+
+          &:first-child {
+            font-weight: bold;
+            color: #2d3748;
+          }
+
+          .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+
+            &.status-completed {
+              background-color: #c6f6d5;
+              color: #2f855a;
+              box-shadow: 0 2px 4px rgba(47, 133, 90, 0.3);
+            }
+
+            &.status-pending {
+              background-color: #fed7d7;
+              color: #c53030;
+              box-shadow: 0 2px 4px rgba(197, 48, 48, 0.3);
+            }
+          }
+
+          .action-btn {
+            padding: 0.5rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: transform 0.2s, opacity 0.3s;
+
+            &.view {
+              background: linear-gradient(145deg, #ebf8ff, #bee3f8);
+              color: #2b6cb0;
+            }
+
+            &.edit {
+              background: linear-gradient(145deg, #edf2f7, #e2e8f0);
+              color: #4a5568;
+            }
+
+            &:hover {
+              transform: translateY(-2px);
+              opacity: 0.9;
+            }
+
+            &:active {
+              transform: translateY(1px);
+            }
+          }
+        }
+      }
+    }
+  }
+}

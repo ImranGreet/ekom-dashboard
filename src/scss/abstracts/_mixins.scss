@@ -1,0 +1,33 @@
+@mixin font-size($size) {
+  font-size: $size;
+}
+
+
+@mixin generate-spacing($property) {
+  @for $i from 0 through 64 {
+    .#{$property}-#{$i} {
+      #{$property}: #{$i}px;
+    }
+  }
+}
+
+
+@mixin position-utilities {
+  .static {
+    position: static;
+  }
+  .relative {
+    position: relative;
+  }
+  .absolute {
+    position: absolute;
+  }
+  .fixed {
+    position: fixed;
+  }
+  .sticky {
+    position: sticky;
+  }
+}
+
+@include position-utilities;
