@@ -1,2 +1,14 @@
 <p>carts works!</p>
-<button (click)="closeTheCurrentTab()">Cart</button>
+
+<div class="card flex justify-center">
+  <button pButton pRipple severity="success" (click)="closeTheCurrentTab()">
+      <WindowMaximizeIcon pButtonIcon />
+      <span pButtonLabel>label</span>
+  </button>
+</div>
+
+
+
+<p-button label="Update" icon="pi pi-refresh" iconPos="bottom" />
+
+<p-button label="Save" icon="pi pi-check" iconPos="right" />

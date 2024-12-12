@@ -1,1 +1,24 @@
-<p>products works!</p>
+<p-tabs value="products">
+  <p-tablist>
+    <p-tab
+     value="products"
+     class="text-transform-capitalize">
+     All Items</p-tab>
+
+    <p-tab
+      [value]="item"
+      *ngFor="let item of cats"
+      class="text-transform-capitalize"
+      (click)="getTheCat(item)"
+      >{{ item }}</p-tab
+    >
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="products">
+      <app-categories></app-categories>
+    </p-tabpanel>
+    <p-tabpanel [value]="item" *ngFor="let item of cats">
+      <app-categories [cat]="category"></app-categories>
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

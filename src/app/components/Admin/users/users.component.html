@@ -11,15 +11,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users">
-        <td>#1001</td>
+      <tr *ngFor="let user of users; index as i">
+        <td>{{ i+1 }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.name?.firstname }} {{ user.name?.lastname }}</td>
         <td>{{ user.email }}</td>
         <td>
           <span class="status status-completed">{{ user.phone }}</span>
         </td>
-
         <td>
           <button class="action-btn view">View</button>
           <button class="action-btn edit">Edit</button>

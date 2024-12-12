@@ -1,0 +1,89 @@
+// Variables for colors and breakpoints
+$primary-color: #4CAF50;
+$secondary-color: #FFFFFF;
+$hover-color: #45a049;
+$font-color: #333333;
+$mobile-breakpoint: 768px;
+
+// Navbar styling
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $primary-color;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $secondary-color;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+
+  .navbar-menu {
+    display: flex;
+    gap: 2rem;
+
+    .navbar-item {
+      text-decoration: none;
+      color: $secondary-color;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $hover-color;
+      }
+    }
+  }
+
+  .navbar-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 0.3rem;
+    cursor: pointer;
+
+    .toggle-bar {
+      width: 25px;
+      height: 3px;
+      background-color: $secondary-color;
+      border-radius: 3px;
+    }
+  }
+
+  // Mobile view
+  @media (max-width: $mobile-breakpoint) {
+    .navbar-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: $primary-color;
+      width: 100%;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      &.active {
+        display: flex;
+      }
+
+      .navbar-item {
+        padding: 0.5rem 1rem;
+        text-align: center;
+      }
+    }
+
+    .navbar-toggle {
+      display: flex;
+    }
+  }
+}

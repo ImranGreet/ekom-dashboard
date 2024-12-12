@@ -6,36 +6,38 @@ import { SingleproductComponent } from './components/Admin/singleproduct/singlep
 import { CartsComponent } from './components/Admin/carts/carts.component';
 import { UsersComponent } from './components/Admin/users/users.component';
 import { SingleuserComponent } from './components/Admin/singleuser/singleuser.component';
+import { AdminlayoutComponent } from './components/Layout/adminlayout/adminlayout.component';
 
 export const routes: Routes = [
   {
-    path:"",
-    component:AppComponent,
-    children:[
+    path: '',
+    component: AdminlayoutComponent,
+    children: [
       {
-        path:"",
-        component:OrderComponent,
+        path: '',
+        component: OrderComponent,
       },
       {
-        path:"products",
-        component:ProductsComponent
+        path: 'products',
+        component: ProductsComponent,
+      },
+
+      {
+        path: 'single-product',
+        component: SingleproductComponent,
       },
       {
-        path:"single-product",
-        component:SingleproductComponent
+        path: 'carts',
+        component: CartsComponent,
       },
       {
-        path:"carts",
-        component:CartsComponent
+        path: 'users',
+        component: UsersComponent,
       },
       {
-        path:"users",
-        component:UsersComponent
+        path: 'single-user',
+        component: SingleuserComponent,
       },
-      {
-        path:"single-user",
-        component:SingleuserComponent
-      }
-    ]
-  }
+    ],
+  },
 ];

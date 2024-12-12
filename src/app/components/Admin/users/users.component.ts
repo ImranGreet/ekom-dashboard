@@ -17,6 +17,6 @@ export class UsersComponent implements OnInit {
       this.users = user;
       console.log(this.users);
     });
-    console.log('Okay');
+
   }
 }

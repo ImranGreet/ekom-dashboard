@@ -1,127 +1,39 @@
-<div class="order-table">
-  <table>
-    <thead>
+<div class="card">
+  <p-table [value]="cartOrOrder" [tableStyle]="{ 'min-width': '60rem' }">
+    <ng-template pTemplate="caption">
+      <div class="flex items-center justify-between">
+        <span class="text-xl font-bold">Products</span>
+        <p-button icon="pi pi-refresh" rounded raised />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
       <tr>
-        <th>Order ID</th>
-        <th>Customer</th>
-        <th>Items</th>
-        <th>Total Price</th>
-        <th>Status</th>
-        <th>Actions</th>
+        <th>Serial No</th>
+        <th>User Id</th>
+        <th>Customer Name</th>
+        <th>Date</th>
+        <th>Purchased Items</th>
       </tr>
-    </thead>
-    <tbody>
+    </ng-template>
+    <ng-template pTemplate="body" let-cart>
       <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
+        <td>{{ cart.id }}</td>
+        <td>{{ cart.userId }}</td>
         <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
+          <app-customerinformation
+            [userId]="cart.userId"
+          ></app-customerinformation>
+        </td>
+        <td>{{ cart.date }}</td>
+        <td>
+          <button (click)="showPurchasedItems()">
+            {{ cart.products.length }}
+          </button>
         </td>
       </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-      <tr>
-        <td>#1001</td>
-        <td>John Doe</td>
-        <td>3</td>
-        <td>$120.00</td>
-        <td><span class="status status-completed">Completed</span></td>
-        <td>
-          <button class="action-btn view">View</button>
-          <button class="action-btn edit">Edit</button>
-        </td>
-      </tr>
-
-    </tbody>
-  </table>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      In total there are {{ cartOrOrder ? cartOrOrder.length : 0 }} Customer.
+    </ng-template>
+  </p-table>
 </div>

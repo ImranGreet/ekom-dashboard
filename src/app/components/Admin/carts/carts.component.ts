@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-carts',
   standalone: true,
-  imports: [],
+  imports: [ButtonModule],
   templateUrl: './carts.component.html',
   styleUrl: './carts.component.scss',
 })
