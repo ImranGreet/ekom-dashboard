@@ -1,9 +1,7 @@
 <div *ngIf="userInformation" class="card flex justify-center">
-  <p class="text-transform-capitalize">
-    {{ userInformation.name.firstname }}
-    {{ userInformation.name.lastname }}
-    <p-button (click)="showDialog()" label="get Details" />
-  </p>
+
+  <p-button (click)="showDialog()" class="text-transform-capitalize"> {{ userInformation.name.firstname }}
+    {{ userInformation.name.lastname }} </p-button>
   <div class="card flex justify-center">
     <p-dialog
       header="Customer Information"

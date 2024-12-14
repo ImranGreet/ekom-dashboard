@@ -4,11 +4,13 @@ import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CustomerinformationComponent } from '../customerinformation/customerinformation.component';
+import { PurchaseditemsComponent } from '../purchaseditems/purchaseditems.component';
+
 
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [CommonModule,TableModule,ButtonModule,CustomerinformationComponent],
+  imports: [CommonModule,TableModule,ButtonModule,CustomerinformationComponent,PurchaseditemsComponent],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss'
 })
@@ -35,6 +37,5 @@ this.cols = [
 
 showPurchasedItems():void{
   this.showOrderItems = !this.showOrderItems;
-  console.log("Okay");
 }
 }

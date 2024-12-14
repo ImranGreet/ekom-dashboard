@@ -81,6 +81,9 @@ export class CustomerinformationComponent implements OnInit {
 
   showDialog() {
     this.visible = true;
+    if(this.readMore){
+      this.readMore=false
+    }
 }
 toggleReadMore():void{
   this.readMore=!this.readMore

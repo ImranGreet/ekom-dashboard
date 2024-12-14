@@ -12,7 +12,7 @@
         <th>User Id</th>
         <th>Customer Name</th>
         <th>Date</th>
-        <th>Purchased Items</th>
+        <th>Purchased Items Quantity</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-cart>
@@ -24,11 +24,10 @@
             [userId]="cart.userId"
           ></app-customerinformation>
         </td>
-        <td>{{ cart.date }}</td>
+        <td>{{ cart.date | date:'MM-dd-yyyy'}}</td>
         <td>
-          <button (click)="showPurchasedItems()">
-            {{ cart.products.length }}
-          </button>
+
+          <app-purchaseditems [purchasedItemsQuantity]="cart.products.length"></app-purchaseditems>
         </td>
       </tr>
     </ng-template>
