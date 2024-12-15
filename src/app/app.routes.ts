@@ -4,8 +4,8 @@ import { ProductsComponent } from './components/Admin/products/products.componen
 import { SingleproductComponent } from './components/Admin/singleproduct/singleproduct.component';
 import { CartsComponent } from './components/Admin/carts/carts.component';
 import { UsersComponent } from './components/Admin/users/users.component';
-import { SingleuserComponent } from './components/Admin/singleuser/singleuser.component';
 import { AdminlayoutComponent } from './components/Layout/adminlayout/adminlayout.component';
+import { ProductdetailsComponent } from './components/Admin/productdetails/productdetails.component';
 
 export const routes: Routes = [
   {
@@ -34,8 +34,8 @@ export const routes: Routes = [
         component: UsersComponent,
       },
       {
-        path: 'single-user',
-        component: SingleuserComponent,
+        path: 'product-details/:id',
+        component: ProductdetailsComponent,
       },
     ],
   },

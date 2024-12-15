@@ -9,13 +9,17 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { RatingModule } from 'primeng/rating';
+import { Dialog } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [TableModule, ButtonModule, CommonModule, RatingModule],
+  imports: [TableModule, ButtonModule, CommonModule, RatingModule,Dialog,InputTextModule,CardModule],
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
@@ -23,6 +27,7 @@ export class CategoriesComponent implements OnInit, OnChanges {
   constructor(private http: HttpClient) {}
   products: any[] = []; // Initialize with an empty array
   @Input() @Optional() cat: string|any = undefined; // Make cat optional
+  visible: boolean = false;
 
   ngOnInit(): void {
     this.loadProducts();
@@ -64,4 +69,8 @@ export class CategoriesComponent implements OnInit, OnChanges {
         });
     }
   }
+
+  showDialog() {
+    this.visible = true;
+}
 }

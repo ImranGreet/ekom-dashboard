@@ -38,7 +38,9 @@
   }
 }
 
-
+.gap-2px{
+  gap: 2px;
+}
 
 // top,bottom,right,left
 @include generate-spacing('top');
@@ -61,4 +63,12 @@ $offset: 250px;
 width: $offset;
 }
 
+
+
+.d-flex{
+  display: flex;
+}
+.align-items-center{
+  align-items: center;
+}
 

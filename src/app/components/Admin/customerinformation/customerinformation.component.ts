@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Optional } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -47,6 +47,8 @@ export class CustomerinformationComponent implements OnInit {
 
   @Input() userId: number | undefined;
 
+  @Input() @Optional() getDetails:boolean = false;
+
   userInformation: UserInformation | any = undefined;
   isLoading: boolean = false;
   errorMessage: string | null = null;
@@ -69,7 +71,6 @@ export class CustomerinformationComponent implements OnInit {
       (response) => {
         this.userInformation = response;
         this.isLoading = false;
-        console.log('User data:', this.userInformation);
       },
       (error) => {
         this.errorMessage = 'Failed to fetch user data. Please try again later.';

@@ -1,1 +1,58 @@
-<p-button (click)="getUserPurchasedDetails()" >Product Quantity {{ purchasedItemsQuantity }}</p-button>
+<p-button (click)="getUserPurchasedDetails()"
+  >Purchased {{ purchasedItems.length }} Items</p-button
+>
+
+<div class="card flex justify-center">
+  <p-dialog
+    header="Purchased Items"
+    [modal]="true"
+    [(visible)]="visible"
+    [position]="'topright'"
+    [style]="{ width: '80rem' }"
+  >
+    <p-table
+      [value]="purchasedItemsContainer"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template #header>
+        <tr>
+          <th>Serial No</th>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ product.productDetails.title }}</td>
+          <td>
+            <img
+                [src]="product.productDetails.image"
+                [alt]="product.name"
+                class="w-24 rounded"
+                width="24"
+                height="24"
+            />
+        </td>
+          <td class="text-transform-capitalize">
+            {{ product.productDetails.category }}
+          </td>
+          <td>{{ product.productDetails.price }}</td>
+          <td>{{ product.productQuantity }}</td>
+          <td>
+            {{ product.productDetails.price }} <span>*</span
+            >{{ product.productQuantity }} <span></span> <span>=</span>
+            {{
+              product.productQuantity * product.productDetails.price
+                | number : "1.0-0"
+            }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+</div>

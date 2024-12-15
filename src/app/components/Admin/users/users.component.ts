@@ -2,11 +2,12 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
+import { CustomerinformationComponent } from '../customerinformation/customerinformation.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule,TableModule,],
+  imports: [CommonModule,TableModule,CustomerinformationComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,12 +8,7 @@ import { Injectable } from '@angular/core';
 export class PurchasediteamsService {
   constructor(private http: HttpClient) {}
 
-  productInformation: object | undefined = undefined;
-
-  findProductById(productId: number): void {
-    this.http
-      .get(`https://fakestoreapi.com/products/${productId}`)
-      .subscribe((productInfo) => (this.productInformation = productInfo,console.log(productInfo)));
-      console.log("okay");
+  findProductById(productId: number): Observable<any> {
+    return this.http.get(`https://fakestoreapi.com/products/${productId}`);
   }
 }
