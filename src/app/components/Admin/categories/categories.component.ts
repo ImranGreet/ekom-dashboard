@@ -1,3 +1,4 @@
+import { PurchasediteamsService } from './../../../services/purchasediteams.service';
 import { HttpClient } from '@angular/common/http';
 import {
   Component,
@@ -14,20 +15,22 @@ import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
+import { ProductinfoupdateComponent } from '../Forms/productinfoupdate/productinfoupdate.component';
 
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [TableModule, ButtonModule, CommonModule, RatingModule,Dialog,InputTextModule,CardModule],
+  imports: [TableModule, ButtonModule, CommonModule, RatingModule,Dialog,InputTextModule,CardModule,ProductinfoupdateComponent],
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit, OnChanges {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private purchasedItemDetails:PurchasediteamsService) {}
   products: any[] = []; // Initialize with an empty array
   @Input() @Optional() cat: string|any = undefined; // Make cat optional
   visible: boolean = false;
+  productInfo:object|undefined=undefined;
 
   ngOnInit(): void {
     this.loadProducts();
@@ -70,7 +73,14 @@ export class CategoriesComponent implements OnInit, OnChanges {
     }
   }
 
-  showDialog() {
+  showDialog(itemId:number) {
     this.visible = true;
+
+    if(itemId !== undefined){
+     this.purchasedItemDetails.findProductById(itemId).subscribe((itemIfo)=>{
+      this.productInfo =itemIfo;
+     });
+
+    }
 }
 }

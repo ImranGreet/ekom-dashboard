@@ -1,3 +1,13 @@
+<div class="card flex justify-center">
+  <p-dialog
+    header="Update Product Information"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '70rem' }"
+  >
+    <app-productinfoupdate [productInfo]="productInfo"></app-productinfoupdate>
+  </p-dialog>
+</div>
 <div class="card">
   <p-table [value]="products" [tableStyle]="{ 'min-width': '60rem' }">
     <ng-template pTemplate="caption">
@@ -37,9 +47,10 @@
                   <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
               </td> -->
         <td>
-          <button class="pl-2">
+          <button class="pl-2" (click)="showDialog(product.id)">
             <i class="pi pi-file-edit" style="font-size: 1rem"></i>
           </button>
+
           <button class="pl-2">
             <i class="pi pi-trash" style="font-size: 1rem"></i>
           </button>

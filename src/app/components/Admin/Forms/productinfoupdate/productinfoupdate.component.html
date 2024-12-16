@@ -1,0 +1,62 @@
+<div class="card">
+  <p-tabs value="0">
+      <p-tablist>
+          <p-tab value="0">Utilities Info</p-tab>
+          <p-tab value="1">Product Image</p-tab>
+          <p-tab value="2">Description</p-tab>
+      </p-tablist>
+      <p-tabpanels>
+          <p-tabpanel value="0">
+            <div class="card flex flex-col md:flex-row gap-4" style="display: flex; gap: 8px; height: 15rem;">
+              <div class="flex items-center gap-4 mb-4">
+                <label for="username" class="font-semibold w-24">Username</label>
+                <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="productInfo" />
+            </div>
+            <div class="flex items-center gap-4 mb-8">
+                <label for="email" class="font-semibold w-24">Email</label>
+                <input pInputText id="email" class="flex-auto" autocomplete="off" />
+            </div>
+
+            <div class="flex items-center gap-4 mb-8">
+              <label for="email" class="font-semibold w-24">Price</label>
+              <input pInputText id="email" class="flex-auto" autocomplete="off" />
+          </div>
+            <div class="flex items-center gap-4 mb-8">
+                <label for="email" class="font-semibold w-24">Cateory</label>
+                <p-select formControlName="selectedCity" [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-56" />
+              </div>
+          </div>
+          </p-tabpanel>
+          <p-tabpanel value="1">
+            <div class="mb-4 p-8 flex items-center justify-center">
+              <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+                  <ng-template pTemplate="header">
+                      <img alt="Card" class="w-full" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
+                  </ng-template>
+
+                  <p-fileupload
+                  #fu
+                  mode="basic"
+                  chooseLabel="Choose"
+                  chooseIcon="pi pi-upload"
+                  name="demo[]"
+                  url="https://www.primefaces.org/cdn/api/upload.php"
+                  accept="image/*"
+                  maxFileSize="1000000"
+
+              />
+              </p-card>
+
+          </div>
+          </p-tabpanel>
+          <p-tabpanel value="2">
+            <div class="card flex justify-center w-full">
+              <textarea rows="5" cols="30" pTextarea ></textarea>
+          </div>
+          </p-tabpanel>
+      </p-tabpanels>
+  </p-tabs>
+  <div class="card flex justify-center" style="float: right;">
+    <p-button label="Save" />
+</div>
+</div>
