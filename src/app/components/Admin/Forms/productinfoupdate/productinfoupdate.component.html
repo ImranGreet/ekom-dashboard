@@ -8,9 +8,10 @@
       <p-tabpanels>
           <p-tabpanel value="0">
             <div class="card flex flex-col md:flex-row gap-4" style="display: flex; gap: 8px; height: 15rem;">
+
               <div class="flex items-center gap-4 mb-4">
-                <label for="username" class="font-semibold w-24">Username</label>
-                <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="productInfo" />
+                <label for="username" class="font-semibold w-24">Product Title</label>
+                <input pInputText id="username" class="flex-auto" autocomplete="off" formControlName="productTitle"   />
             </div>
             <div class="flex items-center gap-4 mb-8">
                 <label for="email" class="font-semibold w-24">Email</label>
@@ -57,6 +58,7 @@
       </p-tabpanels>
   </p-tabs>
   <div class="card flex justify-center" style="float: right;">
-    <p-button label="Save" />
+    <p-button label="Cancel"  styleClass="p-button-cancel"/>
+    <p-button label="Save" styleClass="ml-2"/>
 </div>
 </div>

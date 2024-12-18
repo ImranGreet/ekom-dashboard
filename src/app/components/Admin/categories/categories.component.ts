@@ -17,6 +17,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ProductinfoupdateComponent } from '../Forms/productinfoupdate/productinfoupdate.component';
 
+interface ProductInfo {
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+}
 
 @Component({
   selector: 'app-categories',
@@ -30,7 +37,14 @@ export class CategoriesComponent implements OnInit, OnChanges {
   products: any[] = []; // Initialize with an empty array
   @Input() @Optional() cat: string|any = undefined; // Make cat optional
   visible: boolean = false;
-  productInfo:object|undefined=undefined;
+
+  productInfo: ProductInfo = {
+    title: 'Sample Product',
+    price: 100,
+    description: 'This is a sample product.',
+    category: 'Electronics',
+    image: 'https://via.placeholder.com/150'
+  };
 
   ngOnInit(): void {
     this.loadProducts();
@@ -79,6 +93,7 @@ export class CategoriesComponent implements OnInit, OnChanges {
     if(itemId !== undefined){
      this.purchasedItemDetails.findProductById(itemId).subscribe((itemIfo)=>{
       this.productInfo =itemIfo;
+      console.log(this.productInfo,'pro');
      });
 
     }

@@ -6,14 +6,13 @@ import {
   OnInit,
   Optional,
 } from '@angular/core';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { PurchasediteamsService } from '../../../services/purchasediteams.service';
 import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { CommonModule, DecimalPipe } from '@angular/common';
-import { routes } from '../../../app.routes';
-import { Skeleton } from 'primeng/skeleton';
+
 // Define the interface outside the component
 export interface PurchasedItems {
   productId: number;
@@ -30,7 +29,7 @@ export interface PurchasedItems {
     InputTextModule,
     CommonModule,
     DecimalPipe,
-    Skeleton
+
   ],
   templateUrl: './purchaseditems.component.html',
   styleUrls: ['./purchaseditems.component.scss'], // Corrected key name
@@ -65,8 +64,7 @@ export class PurchaseditemsComponent {
       );
     });
     setTimeout(() => {
-      this.showDialog('topright');
-      console.log("Okay");
+      this.showDialog('center');
     }, 1000);
   }
 
