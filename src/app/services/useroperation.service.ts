@@ -1,73 +1,47 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '../../scripts/userinfo';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UseroperationService {
-  constructor(private http: HttpClient) {}
-  getAllUsers() {
-    return this.http.get<string[]>('https://fakestoreapi.com/users');
-  }
-  getSingleUser(userId: number) {
-    return this.http.get<string[]>(`https://fakestoreapi.com/users/${userId}`);
-  }
-  getUsersInLimit(limitNumber: number) {
-    return this.http.get<string[]>(
-      `https://fakestoreapi.com/users?limit=${limitNumber}`
-    );
-  }
-  addNewUser(): void {
-    this.http.post<string[]>(`https://fakestoreapi.com/users`, {
-      body: JSON.stringify({
-        email: 'John@gmail.com',
-        username: 'johnd',
-        password: 'm38rmF$',
-        name: {
-          firstname: 'John',
-          lastname: 'Doe',
-        },
-        address: {
-          city: 'kilcoole',
-          street: '7835 new road',
-          number: 3,
-          zipcode: '12926-3874',
-          geolocation: {
-            lat: '-37.3159',
-            long: '81.1496',
-          },
-        },
-        phone: '1-570-236-7033',
-      }),
-    });
+abstract class UserService {
+  constructor(protected http: HttpClient) {}
+
+  abstract createUser(user: User): void;
+  abstract getUser(id: number): User | undefined;
+  abstract updateUser(id: number, updatedUser: Partial<User>): void;
+  abstract deleteUser(id: number): void;
+}
+
+export class UseroperationService extends UserService {
+  constructor(http: HttpClient) {
+    super(http);
   }
 
-  updateUser() {
-    this.http.put<string[]>(`https://fakestoreapi.com/users`, {
-      body: JSON.stringify({
-        email: 'John@gmail.com',
-        username: 'johnd',
-        password: 'm38rmF$',
-        name: {
-          firstname: 'John',
-          lastname: 'Doe',
-        },
-        address: {
-          city: 'kilcoole',
-          street: '7835 new road',
-          number: 3,
-          zipcode: '12926-3874',
-          geolocation: {
-            lat: '-37.3159',
-            long: '81.1496',
-          },
-        },
-        phone: '1-570-236-7033',
-      }),
-    });
+  private users: User[] = [];
+
+  createUser(user: User): void {
+    this.users.push(user);
+    console.log('User created successfully:', user);
   }
 
-  deleteUser(userId:number){
-    this.http.delete<string>(`https://fakestoreapi.com/users/${userId}`);
+  getUser(id: number): User | undefined {
+    return this.users.find((user) => user.id === id);
+  }
+
+  updateUser(id: number, updatedUser: Partial<User>): void {
+    const index = this.users.findIndex((user) => user.id === id);
+    if (index !== -1) {
+      this.users[index] = { ...this.users[index], ...updatedUser };
+      console.log('User updated successfully:', this.users[index]);
+    } else {
+      console.log('User not found');
+    }
+  }
+
+  deleteUser(id: number): void {
+    this.users = this.users.filter((user) => user.id !== id);
+    console.log('User deleted successfully');
   }
 }

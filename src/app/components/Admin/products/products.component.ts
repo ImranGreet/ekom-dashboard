@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TabsModule } from 'primeng/tabs';
 import { CategoriesComponent } from '../categories/categories.component';
+
 
 @Component({
   selector: 'app-products',
@@ -30,5 +31,7 @@ export class ProductsComponent implements OnInit {
     this.router.navigate([`/products/products-categories/${cat}`]);
     this.category = cat;
   }
+
+
 
 }

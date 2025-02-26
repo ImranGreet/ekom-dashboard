@@ -1,0 +1,29 @@
+<div class="table-container" [ngStyle]="customStyles">
+  <table>
+    <!-- Table Header -->
+    <ng-container *ngIf="headerTemplateRef; else defaultHeader">
+      <ng-container *ngTemplateOutlet="headerTemplateRef"></ng-container>
+    </ng-container>
+    <ng-template #defaultHeader>
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns">{{ column }}</th>
+        </tr>
+      </thead>
+    </ng-template>
+
+    <!-- Table Body -->
+    <tbody>
+      <ng-container *ngIf="rowTemplateRef; else defaultRow">
+        <ng-container *ngFor="let row of data">
+          <ng-container *ngTemplateOutlet="rowTemplateRef; context: { $implicit: row }"></ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-template #defaultRow>
+        <tr *ngFor="let row of data" (click)="onRowClick(row)">
+          <td *ngFor="let column of columns">{{ row[column] }}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

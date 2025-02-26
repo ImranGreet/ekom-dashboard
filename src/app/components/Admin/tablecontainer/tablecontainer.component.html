@@ -1,0 +1,24 @@
+<app-xenmeshlist
+  [data]="tableData"
+  [columns]="columns"
+  [customStyles]="customStyles"
+  (rowClicked)="onRowClick($event)">
+
+  <!-- Custom Header Template -->
+  <ng-template #headerTemplate>
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">{{ column.toUpperCase() }}</th>
+      </tr>
+    </thead>
+  </ng-template>
+
+  <!-- Custom Row Template -->
+  <ng-template #rowTemplate let-row>
+    <tr (click)="onRowClick(row)">
+      <td>{{ row.id }}</td>
+      <td>{{ row.name }}</td>
+      <td>{{ row.age }}</td>
+    </tr>
+  </ng-template>
+</app-xenmeshlist>

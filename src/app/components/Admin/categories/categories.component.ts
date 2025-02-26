@@ -1,3 +1,4 @@
+import { ProductoperationService } from './../../../services/productoperation.service';
 import { PurchasediteamsService } from './../../../services/purchasediteams.service';
 import { HttpClient } from '@angular/common/http';
 import {
@@ -7,6 +8,7 @@ import {
   OnChanges,
   SimpleChanges,
   Optional,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -16,6 +18,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ProductinfoupdateComponent } from '../Forms/productinfoupdate/productinfoupdate.component';
+
+
 
 interface ProductInfo {
   title: string;
@@ -33,7 +37,7 @@ interface ProductInfo {
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit, OnChanges {
-  constructor(private http: HttpClient,private purchasedItemDetails:PurchasediteamsService) {}
+  constructor(private http: HttpClient,private purchasedItemDetails:PurchasediteamsService,private productsOperation:ProductoperationService) {}
   products: any[] = []; // Initialize with an empty array
   @Input() @Optional() cat: string|any = undefined; // Make cat optional
   visible: boolean = false;
@@ -98,4 +102,11 @@ export class CategoriesComponent implements OnInit, OnChanges {
 
     }
 }
+
+
+
+  deleteProduct(id: number): void {
+    this.productsOperation.deleteProduct(id);
+  }
+
 }
