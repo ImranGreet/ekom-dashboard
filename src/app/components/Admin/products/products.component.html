@@ -9,8 +9,8 @@
       [value]="item"
       *ngFor="let item of cats"
       class="text-transform-capitalize"
-      (click)="getTheCat(item)"
-      >{{ item }}</p-tab
+      (click)="getTheCat(item.category)"
+      >{{ item.category }}</p-tab
     >
   </p-tablist>
   <p-tabpanels>
