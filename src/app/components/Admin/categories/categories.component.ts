@@ -96,47 +96,33 @@ export class CategoriesComponent implements OnInit, OnChanges {
   first: number = 0;
   rows: number = 10;
   total: number | undefined = undefined;
+  page: number = 1; // Track the current page
 
   ngOnInit(): void {
-    this.loadProducts();
+    this.loadProducts(this.page);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('cat' in changes) {
-      this.loadProducts();
+      this.loadProducts(this.page);
     }
   }
 
-  loadProducts(): void {
-    if (this.cat) {
-      this.http
-        .get<ApiResponse>(`http://127.0.0.1:8000/api/products/${this.cat}`)
-        .subscribe({
-          next: (response) => {
-            this.products = response.products.data;
-            console.log(this.products, 'cat');
-          },
-          error: (error) => {
-            console.error('Error fetching products:', error);
-            // Handle error gracefully, e.g., display an error message
-          },
-        });
-    } else {
-      // Fetch all products if cat is not provided
-      this.http
-        .get<ApiResponse>('http://127.0.0.1:8000/api/products')
-        .subscribe({
-          next: (response) => {
-            this.products = response.products.data;
-            console.log(this.products, 'all products');
-            this.total = response.products.total;
-          },
-          error: (error) => {
-            console.error('Error fetching products:', error);
-            // Handle error gracefully
-          },
-        });
-    }
+  loadProducts(page: number): void {
+    const url = this.cat
+      ? `http://127.0.0.1:8000/api/products/${this.cat}?page=${page}`
+      : `http://127.0.0.1:8000/api/products?page=${page}`;
+
+    this.http.get<ApiResponse>(url).subscribe({
+      next: (response) => {
+        this.products = response.products.data;
+        this.total = response.products.total;
+        console.log(this.products, 'Products loaded');
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      },
+    });
   }
 
   showDialog(itemId: number) {
@@ -150,12 +136,37 @@ export class CategoriesComponent implements OnInit, OnChanges {
     }
   }
 
+  updateProductStatus(id: number, status: number): void {
+    const statusBoolean = status === 1 ? true : false;
+    this.productsOperation.updateProductStatus(id, statusBoolean).subscribe({
+      next: (res) => {
+        console.log('Product status updated successfully', res);
+        // Reload the current page or update the UI
+        this.loadProducts(this.page);
+      },
+      error: (error) => {
+        console.error('Error updating product status:', error);
+      },
+    });
+  }
+
   deleteProduct(id: number): void {
-    this.productsOperation.deleteProduct(id);
+    this.productsOperation.deleteProduct(id).subscribe({
+      next: () => {
+        console.log('Product deleted successfully');
+        // Reload the current page after deletion
+        this.loadProducts(this.page);
+      },
+      error: (error) => {
+        console.error('Error deleting product:', error);
+      },
+    });
   }
 
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
+    this.page = event.page ? event.page + 1 : 1; // Update the current page
+    this.loadProducts(this.page); // Fetch data for the new page
   }
 }
