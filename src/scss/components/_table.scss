@@ -5,7 +5,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   padding: 1.5rem;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 
   table {
     width: 100%;
@@ -103,4 +103,24 @@
       }
     }
   }
+}
+
+.p-datatable-tfoot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-paginator-page.p-paginator-page-selected
+{
+  background-color: rgb(255, 255, 152) !important;
+}
+
+.p-button
+{
+  background: red;
+}
+
+.text-red-500{
+  color: rgba(red,0.5);
 }

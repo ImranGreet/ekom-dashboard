@@ -75,6 +75,7 @@ interface PageEvent {
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
+
 export class CategoriesComponent implements OnInit, OnChanges {
   constructor(
     private http: HttpClient,
@@ -82,7 +83,7 @@ export class CategoriesComponent implements OnInit, OnChanges {
     private productsOperation: ProductoperationService
   ) {}
   products: any[] = [];
-  @Input() @Optional() cat: string | any = undefined; // Make cat optional
+  @Input() @Optional() cat: string | any = undefined;
   visible: boolean = false;
 
   productInfo: ProductInfo = {
@@ -96,7 +97,7 @@ export class CategoriesComponent implements OnInit, OnChanges {
   first: number = 0;
   rows: number = 10;
   total: number | undefined = undefined;
-  page: number = 1; // Track the current page
+  page: number = 1;
 
   ngOnInit(): void {
     this.loadProducts(this.page);
@@ -127,7 +128,6 @@ export class CategoriesComponent implements OnInit, OnChanges {
 
   showDialog(itemId: number) {
     this.visible = true;
-
     if (itemId !== undefined) {
       this.purchasedItemDetails.findProductById(itemId).subscribe((itemIfo) => {
         this.productInfo = itemIfo;
@@ -141,7 +141,6 @@ export class CategoriesComponent implements OnInit, OnChanges {
     this.productsOperation.updateProductStatus(id, statusBoolean).subscribe({
       next: (res) => {
         console.log('Product status updated successfully', res);
-        // Reload the current page or update the UI
         this.loadProducts(this.page);
       },
       error: (error) => {
@@ -154,7 +153,6 @@ export class CategoriesComponent implements OnInit, OnChanges {
     this.productsOperation.deleteProduct(id).subscribe({
       next: () => {
         console.log('Product deleted successfully');
-        // Reload the current page after deletion
         this.loadProducts(this.page);
       },
       error: (error) => {
@@ -166,7 +164,7 @@ export class CategoriesComponent implements OnInit, OnChanges {
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
-    this.page = event.page ? event.page + 1 : 1; // Update the current page
-    this.loadProducts(this.page); // Fetch data for the new page
+    this.page = event.page ? event.page + 1 : 1;
+    this.loadProducts(this.page);
   }
 }

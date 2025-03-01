@@ -5,6 +5,7 @@ import { SingleproductComponent } from './components/Admin/singleproduct/singlep
 import { UsersComponent } from './components/Admin/users/users.component';
 import { AdminlayoutComponent } from './components/Layout/adminlayout/adminlayout.component';
 import { ProductdetailsComponent } from './components/Admin/productdetails/productdetails.component';
+import { ProductcustomizationComponent } from './components/Admin/productcustomization/productcustomization.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,10 @@ export const routes: Routes = [
         path: 'product-details/:id',
         component: ProductdetailsComponent,
       },
+      {
+        path:'product-customization',
+        component:ProductcustomizationComponent
+      }
 
     ],
   },
