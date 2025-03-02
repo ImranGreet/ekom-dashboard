@@ -6,6 +6,9 @@ import { UsersComponent } from './components/Admin/users/users.component';
 import { AdminlayoutComponent } from './components/Layout/adminlayout/adminlayout.component';
 import { ProductdetailsComponent } from './components/Admin/productdetails/productdetails.component';
 import { ProductcustomizationComponent } from './components/Admin/productcustomization/productcustomization.component';
+import { TransactionsComponent } from './components/Admin/transactions/transactions.component';
+import { RolesComponent } from './components/Admin/roles/roles.component';
+import { PermissionsComponent } from './components/Admin/permissions/permissions.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +40,18 @@ export const routes: Routes = [
       {
         path:'product-customization',
         component:ProductcustomizationComponent
+      },
+      {
+        path:'transaction',
+        component:TransactionsComponent
+      },
+      {
+        path:'roles',
+        component:RolesComponent
+      },
+      {
+        path:'permissions',
+        component:PermissionsComponent
       }
 
     ],
