@@ -9,6 +9,7 @@ import { ProductcustomizationComponent } from './components/Admin/productcustomi
 import { TransactionsComponent } from './components/Admin/transactions/transactions.component';
 import { RolesComponent } from './components/Admin/roles/roles.component';
 import { PermissionsComponent } from './components/Admin/permissions/permissions.component';
+import { StuffsComponent } from './components/Admin/stuffs/stuffs.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,10 @@ export const routes: Routes = [
       {
         path:'permissions',
         component:PermissionsComponent
+      },
+      {
+        path:'our_stuff',
+        component:StuffsComponent
       }
 
     ],

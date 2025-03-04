@@ -21,6 +21,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Table } from 'primeng/table';
 import { ProductService } from '../../../services/product.service';
+import { ProductoperationService } from '../../../services/productoperation.service';
+
 
 
 interface Product {
@@ -57,6 +59,8 @@ interface ExportColumn {
   styleUrl: './products.component.scss',
 })
 
+
+
 export class ProductsComponent implements OnInit {
 
     productDialog: boolean = false;
@@ -74,7 +78,8 @@ export class ProductsComponent implements OnInit {
       private productService: ProductService,
       private messageService: MessageService,
       private confirmationService: ConfirmationService,
-      private cd: ChangeDetectorRef
+      private cd: ChangeDetectorRef,
+      private productOperationService: ProductoperationService
     ) {}
 
     ngOnInit(): void {
@@ -89,6 +94,7 @@ export class ProductsComponent implements OnInit {
       this.productService.getProducts().then((data) => {
         this.products = data;
         this.cd.markForCheck();
+        this.productOperationService.loadAllProducts();
       });
 
       this.statuses = [

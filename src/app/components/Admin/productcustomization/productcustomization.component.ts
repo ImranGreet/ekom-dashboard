@@ -21,6 +21,9 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Table } from 'primeng/table';
 import { ProductService } from '../../../services/product.service';
+import { ProductoperationService } from '../../../services/productoperation.service';
+
+
 
 interface Product {
   id?: string;
@@ -67,11 +70,15 @@ export class ProductcustomizationComponent implements OnInit {
 
   @ViewChild('dt') dt!: Table;
 
+  ProductNew:object=[];
+
   constructor(
     private productService: ProductService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    /*custom service*/
+    private productoperationService: ProductoperationService
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +93,9 @@ export class ProductcustomizationComponent implements OnInit {
     this.productService.getProducts().then((data) => {
       this.products = data;
       this.cd.markForCheck();
+      this.productoperationService.loadAllProducts();
+      this.ProductNew=this.productoperationService.products$;
+      console.log(this.ProductNew,'new sum');
     });
 
     this.statuses = [
