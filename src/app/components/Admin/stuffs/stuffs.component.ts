@@ -13,6 +13,9 @@ import { InputNumber } from 'primeng/inputnumber';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Checkbox } from 'primeng/checkbox';
+import {IconField} from "primeng/iconfield";
+import {InputIcon} from "primeng/inputicon";
+import {InputText} from "primeng/inputtext";
 
 interface Stuff {
   id: number;
@@ -75,7 +78,10 @@ interface Column {
     RadioButton,
     InputNumber,
     ConfirmDialog,
-    Checkbox
+    Checkbox,
+    IconField,
+    InputIcon,
+    InputText
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './stuffs.component.html',
@@ -122,7 +128,7 @@ export class StuffsComponent implements OnInit {
 
   deleteSelectedStuff() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
+      message: 'Are you sure you want to delete the selected Stuff?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
     });

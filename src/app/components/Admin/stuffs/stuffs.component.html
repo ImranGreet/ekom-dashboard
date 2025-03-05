@@ -28,6 +28,21 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
   >
+    <ng-template #caption>
+      <div class="flex items-center justify-between">
+
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-search" />
+          <input
+            pInputText
+            type="text"
+
+            placeholder="Search..."
+          />
+        </p-iconfield>
+      </div>
+    </ng-template>
+
     <ng-template #header let-columns>
       <tr>
         <th>Code</th>
