@@ -1,5 +1,4 @@
 <p-toolbar styleClass="mb-6">
-
   <ng-template #start>
     <p-button
       label="New"
@@ -8,13 +7,13 @@
       (onClick)="openNew()"
     />
     <p-button
-  severity="danger"
-  label="Delete"
-  icon="pi pi-trash"
-  outlined
-  (onClick)="deleteMultipleStuff()"
-  [disabled]="!isAnyCheckboxSelected()"
-/>
+      severity="danger"
+      label="Delete"
+      icon="pi pi-trash"
+      outlined
+      (onClick)="deleteMultipleStuff()"
+      [disabled]="!isAnyCheckboxSelected()"
+    />
   </ng-template>
 </p-toolbar>
 <div class="card">
@@ -61,10 +60,10 @@
       <tr>
         <td>
           <p-checkbox
-          [binary]="true"
-          [(ngModel)]="rowData.selected"
-          (onChange)="onCheckboxChange()"
-        />
+            [binary]="true"
+            [(ngModel)]="rowData.selected"
+            (onChange)="onCheckboxChange()"
+          />
         </td>
         <td *ngFor="let col of columns">
           {{ rowData[col.field] }}
@@ -93,76 +92,158 @@
     </ng-template>
   </p-table>
 
-  <!-- Dialog for Create/Edit -->
-  <p-dialog [(visible)]="showDialog" [style]="{ width: '450px' }" [header]="stuff.id ? 'Edit Stuff' : 'Create New Stuff'" [modal]="true" [dismissableMask]="false">
+  <p-dialog
+    [(visible)]="showDialog"
+    [style]="{ width: '450px' }"
+    [header]="stuff.id ? 'Edit Stuff' : 'Create New Stuff'"
+    [modal]="true"
+    [dismissableMask]="false"
+  >
     <ng-template #content>
-      <form (ngSubmit)="stuff.id ? updateStuff() : createNewStuff()" #stuffForm="ngForm">
+      <form
+        (ngSubmit)="stuff.id ? updateStuff() : createNewStuff()"
+        #stuffForm="ngForm"
+      >
         <div class="flex flex-col gap-6">
-          <!-- Name -->
           <div>
             <label for="name" class="block font-bold mb-3">Name</label>
-            <input type="text" pInputText id="name" [(ngModel)]="stuff.name" name="name" required />
+            <input
+              type="text"
+              pInputText
+              id="name"
+              [(ngModel)]="stuff.name"
+              name="name"
+              required
+            />
           </div>
 
-          <!-- Position -->
           <div>
             <label for="position" class="block font-bold mb-3">Position</label>
-            <input type="text" pInputText id="position" [(ngModel)]="stuff.position" name="position" required />
+            <input
+              type="text"
+              pInputText
+              id="position"
+              [(ngModel)]="stuff.position"
+              name="position"
+              required
+            />
           </div>
 
-          <!-- Start From -->
           <div>
-            <label for="start_from" class="block font-bold mb-3">Start From</label>
-            <input type="date" pInputText id="start_from" [(ngModel)]="stuff.start_from" name="start_from" required />
-            <!-- <p-datepicker [(ngModel)]="stuff.start_from" id="start_from" name="start_from" required /> -->
+            <label for="start_from" class="block font-bold mb-3"
+              >Start From</label
+            >
+            <input
+              type="date"
+              pInputText
+              id="start_from"
+              [(ngModel)]="stuff.start_from"
+              name="start_from"
+              required
+            />
           </div>
 
-          <!-- Contact Normal -->
           <div>
-            <label for="contact_normal" class="block font-bold mb-3">Contact Normal</label>
-            <input type="text" pInputText id="contact_normal" [(ngModel)]="stuff.contact_normal" name="contact_normal" required />
+            <label for="contact_normal" class="block font-bold mb-3"
+              >Contact Normal</label
+            >
+            <input
+              type="text"
+              pInputText
+              id="contact_normal"
+              [(ngModel)]="stuff.contact_normal"
+              name="contact_normal"
+              required
+            />
           </div>
 
-          <!-- Address -->
           <div>
             <label for="address" class="block font-bold mb-3">Address</label>
-            <input type="text" pInputText id="address" [(ngModel)]="stuff.address" name="address" required />
+            <input
+              type="text"
+              pInputText
+              id="address"
+              [(ngModel)]="stuff.address"
+              name="address"
+              required
+            />
           </div>
 
-          <!-- Salary Wages -->
           <div>
-            <label for="salary_wages" class="block font-bold mb-3">Salary Wages</label>
-            <p-inputNumber id="salary_wages" [(ngModel)]="stuff.salary_wages" name="salary_wages" required />
+            <label for="salary_wages" class="block font-bold mb-3"
+              >Salary Wages</label
+            >
+            <p-inputNumber
+              id="salary_wages"
+              [(ngModel)]="stuff.salary_wages"
+              name="salary_wages"
+              required
+            />
           </div>
 
-          <!-- Benefits -->
           <div>
             <label for="benifits" class="block font-bold mb-3">Benefits</label>
-            <input type="text" pInputText id="benifits" [(ngModel)]="stuff.benifits" name="benifits" required />
+            <input
+              type="text"
+              pInputText
+              id="benifits"
+              [(ngModel)]="stuff.benifits"
+              name="benifits"
+              required
+            />
           </div>
 
-          <!-- Vacation Period -->
           <div>
-            <label for="vacation_peroid" class="block font-bold mb-3">Vacation Period</label>
-            <p-inputNumber id="vacation_peroid" [(ngModel)]="stuff.vacation_peroid" name="vacation_peroid" required />
+            <label for="vacation_peroid" class="block font-bold mb-3"
+              >Vacation Period</label
+            >
+            <p-inputNumber
+              id="vacation_peroid"
+              [(ngModel)]="stuff.vacation_peroid"
+              name="vacation_peroid"
+              required
+            />
           </div>
 
-          <!-- Training Records -->
           <div>
-            <label for="training_records" class="block font-bold mb-3">Training Records</label>
-            <input type="text" pInputText id="training_records" [(ngModel)]="stuff.training_records" name="training_records" required />
+            <label for="training_records" class="block font-bold mb-3"
+              >Training Records</label
+            >
+            <input
+              type="text"
+              pInputText
+              id="training_records"
+              [(ngModel)]="stuff.training_records"
+              name="training_records"
+              required
+            />
           </div>
 
-          <!-- Emergency Contact -->
           <div>
-            <label for="contact_emergency" class="block font-bold mb-3">Emergency Contact</label>
-            <input type="text" pInputText id="contact_emergency" [(ngModel)]="stuff.contact_emergency" name="contact_emergency" required />
+            <label for="contact_emergency" class="block font-bold mb-3"
+              >Emergency Contact</label
+            >
+            <input
+              type="text"
+              pInputText
+              id="contact_emergency"
+              [(ngModel)]="stuff.contact_emergency"
+              name="contact_emergency"
+              required
+            />
           </div>
 
-          <!-- Notes -->
           <div>
             <label for="notes" class="block font-bold mb-3">Notes</label>
-            <textarea pInputTextarea id="notes" [(ngModel)]="stuff.notes" name="notes"></textarea>
+
+            <textarea
+              rows="5"
+              cols="30"
+              pTextarea
+              [(ngModel)]="stuff.notes"
+              id="additional_notes"
+              name="additional_notes"
+            ></textarea>
           </div>
         </div>
       </form>
