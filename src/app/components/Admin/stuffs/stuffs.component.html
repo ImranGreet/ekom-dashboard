@@ -1,4 +1,5 @@
 <p-toolbar styleClass="mb-6">
+
   <ng-template #start>
     <p-button
       label="New"
@@ -6,10 +7,18 @@
       class="mr-2"
       (onClick)="openNew()"
     />
-    <p-button severity="danger" label="Delete" icon="pi pi-trash" outlined />
+    <p-button
+  severity="danger"
+  label="Delete"
+  icon="pi pi-trash"
+  outlined
+  (onClick)="deleteMultipleStuff()"
+  [disabled]="!isAnyCheckboxSelected()"
+/>
   </ng-template>
 </p-toolbar>
 <div class="card">
+  <p-toast />
   <p-table
     #dt
     [value]="ourStuffs"
@@ -28,7 +37,13 @@
       <div class="flex items-center justify-between">
         <p-iconfield>
           <p-inputicon styleClass="pi pi-search" />
-          <input pInputText type="text" placeholder="Search..." />
+          <input
+            pInputText
+            type="text"
+            placeholder="Search..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()"
+          />
         </p-iconfield>
       </div>
     </ng-template>
@@ -44,25 +59,33 @@
     </ng-template>
     <ng-template #body let-rowData let-columns="columns">
       <tr>
-        <td><p-checkbox [binary]="true" /></td>
+        <td>
+          <p-checkbox
+          [binary]="true"
+          [(ngModel)]="rowData.selected"
+          (onChange)="onCheckboxChange()"
+        />
+        </td>
         <td *ngFor="let col of columns">
           {{ rowData[col.field] }}
         </td>
         <td>
           <div class="d-flex">
+            <!-- Edit Button -->
             <p-button
               icon="pi pi-pencil"
               class="mr-2"
               [rounded]="true"
               [outlined]="true"
-              (onClick)="editStuff()"
+              (onClick)="editStuff(rowData.id)"
             />
+            <!-- Delete Button -->
             <p-button
               icon="pi pi-trash"
               severity="danger"
               [rounded]="true"
               [outlined]="true"
-              (onClick)="deleteSelectedStuff()"
+              (onClick)="deleteSelectedStuff(rowData.id)"
             />
           </div>
         </td>
@@ -70,101 +93,99 @@
     </ng-template>
   </p-table>
 
-  <p-dialog
-    [(visible)]="showDialog"
-    [style]="{ width: '450px' }"
-    header="Product Details"
-    [modal]="true"
-  >
+  <!-- Dialog for Create/Edit -->
+  <p-dialog [(visible)]="showDialog" [style]="{ width: '450px' }" [header]="stuff.id ? 'Edit Stuff' : 'Create New Stuff'" [modal]="true" [dismissableMask]="false">
     <ng-template #content>
-      <div class="flex flex-col gap-6">
-        <img [src]="" class="block m-auto pb-4" />
-        <div>
-          <label for="name" class="block font-bold mb-3">Name</label>
-          <input type="text" pInputText id="name" required autofocus fluid />
-          <small class="text-red-500">Name is required.</small>
-        </div>
-        <div>
-          <label for="description" class="block font-bold mb-3"
-            >Description</label
-          >
-          <textarea
-            id="description"
-            pTextarea
-            required
-            rows="3"
-            cols="20"
-            fluid
-          ></textarea>
-        </div>
+      <form (ngSubmit)="stuff.id ? updateStuff() : createNewStuff()" #stuffForm="ngForm">
+        <div class="flex flex-col gap-6">
+          <!-- Name -->
+          <div>
+            <label for="name" class="block font-bold mb-3">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="stuff.name" name="name" required />
+          </div>
 
-        <div>
-          <label for="inventoryStatus" class="block font-bold mb-3"
-            >Inventory Status</label
-          >
-          <p-select
-            inputId="inventoryStatus"
-            optionLabel="label"
-            placeholder="Select a Status"
-            fluid
-          />
-        </div>
+          <!-- Position -->
+          <div>
+            <label for="position" class="block font-bold mb-3">Position</label>
+            <input type="text" pInputText id="position" [(ngModel)]="stuff.position" name="position" required />
+          </div>
 
-        <div>
-          <span class="block font-bold mb-4">Category</span>
-          <div class="grid grid-cols-12 gap-4">
-            <div class="flex items-center gap-2 col-span-6">
-              <p-radiobutton
-                id="category1"
-                name="category"
-                value="Accessories"
-              />
-              <label for="category1">Accessories</label>
-            </div>
-            <div class="flex items-center gap-2 col-span-6">
-              <p-radiobutton id="category2" name="category" value="Clothing" />
-              <label for="category2">Clothing</label>
-            </div>
-            <div class="flex items-center gap-2 col-span-6">
-              <p-radiobutton
-                id="category3"
-                name="category"
-                value="Electronics"
-              />
-              <label for="category3">Electronics</label>
-            </div>
-            <div class="flex items-center gap-2 col-span-6">
-              <p-radiobutton id="category4" name="category" value="Fitness" />
-              <label for="category4">Fitness</label>
-            </div>
+          <!-- Start From -->
+          <div>
+            <label for="start_from" class="block font-bold mb-3">Start From</label>
+            <input type="date" pInputText id="start_from" [(ngModel)]="stuff.start_from" name="start_from" required />
+            <!-- <p-datepicker [(ngModel)]="stuff.start_from" id="start_from" name="start_from" required /> -->
+          </div>
+
+          <!-- Contact Normal -->
+          <div>
+            <label for="contact_normal" class="block font-bold mb-3">Contact Normal</label>
+            <input type="text" pInputText id="contact_normal" [(ngModel)]="stuff.contact_normal" name="contact_normal" required />
+          </div>
+
+          <!-- Address -->
+          <div>
+            <label for="address" class="block font-bold mb-3">Address</label>
+            <input type="text" pInputText id="address" [(ngModel)]="stuff.address" name="address" required />
+          </div>
+
+          <!-- Salary Wages -->
+          <div>
+            <label for="salary_wages" class="block font-bold mb-3">Salary Wages</label>
+            <p-inputNumber id="salary_wages" [(ngModel)]="stuff.salary_wages" name="salary_wages" required />
+          </div>
+
+          <!-- Benefits -->
+          <div>
+            <label for="benifits" class="block font-bold mb-3">Benefits</label>
+            <input type="text" pInputText id="benifits" [(ngModel)]="stuff.benifits" name="benifits" required />
+          </div>
+
+          <!-- Vacation Period -->
+          <div>
+            <label for="vacation_peroid" class="block font-bold mb-3">Vacation Period</label>
+            <p-inputNumber id="vacation_peroid" [(ngModel)]="stuff.vacation_peroid" name="vacation_peroid" required />
+          </div>
+
+          <!-- Training Records -->
+          <div>
+            <label for="training_records" class="block font-bold mb-3">Training Records</label>
+            <input type="text" pInputText id="training_records" [(ngModel)]="stuff.training_records" name="training_records" required />
+          </div>
+
+          <!-- Emergency Contact -->
+          <div>
+            <label for="contact_emergency" class="block font-bold mb-3">Emergency Contact</label>
+            <input type="text" pInputText id="contact_emergency" [(ngModel)]="stuff.contact_emergency" name="contact_emergency" required />
+          </div>
+
+          <!-- Notes -->
+          <div>
+            <label for="notes" class="block font-bold mb-3">Notes</label>
+            <textarea pInputTextarea id="notes" [(ngModel)]="stuff.notes" name="notes"></textarea>
           </div>
         </div>
-
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-6">
-            <label for="price" class="block font-bold mb-3">Price</label>
-            <p-inputnumber
-              id="price"
-              mode="currency"
-              currency="USD"
-              locale="en-US"
-              fluid
-            />
-          </div>
-          <div class="col-span-6">
-            <label for="quantity" class="block font-bold mb-3">Quantity</label>
-            <p-inputnumber id="quantity" fluid />
-          </div>
-        </div>
-      </div>
+      </form>
     </ng-template>
 
     <ng-template #footer>
-      <p-button label="Cancel" icon="pi pi-times" text />
-      <p-button label="Save" icon="pi pi-check" />
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        (onClick)="showDialog = false; resetStuffForm()"
+        styleClass="p-button-text"
+      />
+      <p-button
+        type="submit"
+        [label]="stuff.id ? 'Update' : 'Save'"
+        icon="pi pi-check"
+        (onClick)="stuffForm.ngSubmit.emit()"
+        [disabled]="!stuffForm || stuffForm.invalid"
+      />
     </ng-template>
   </p-dialog>
 
+  <!-- Paginator -->
   <div class="card flex justify-center">
     <p-paginator
       (onPageChange)="onPageChange($event)"
@@ -175,5 +196,6 @@
     />
   </div>
 
+  <!-- Confirm Dialog for Delete -->
   <p-confirmDialog [style]="{ width: '450px' }" />
 </div>

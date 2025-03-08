@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StuffService } from '../../../services/stuff.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
+/*prime ng*/
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Toolbar } from 'primeng/toolbar';
@@ -13,10 +15,13 @@ import { InputNumber } from 'primeng/inputnumber';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Checkbox } from 'primeng/checkbox';
-import { IconField } from "primeng/iconfield";
-import { InputIcon } from "primeng/inputicon";
-import { InputText } from "primeng/inputtext";
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
 import { Paginator } from 'primeng/paginator';
+import { FormsModule, NgForm } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
+import { ToastModule } from 'primeng/toast';
 
 interface Stuff {
   id: number;
@@ -33,6 +38,7 @@ interface Stuff {
   notes: string;
   created_at: string;
   updated_at: string;
+  selected?: boolean;
 }
 
 interface PaginationLinks {
@@ -83,18 +89,24 @@ interface Column {
     IconField,
     InputIcon,
     InputText,
-    Paginator
+    Paginator,
+    FormsModule,
+    DatePickerModule,
+    ToastModule,
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './stuffs.component.html',
   styleUrl: './stuffs.component.scss',
 })
 export class StuffsComponent implements OnInit {
+  @ViewChild('stuffForm') stuffForm!: NgForm;
+
   constructor(
     private stuffService: StuffService,
     private http: HttpClient,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ourStuffs: Stuff[] = [];
@@ -105,6 +117,25 @@ export class StuffsComponent implements OnInit {
   total: number = 0;
   currentPage: number = 1;
   perPage = 20;
+  searchTerm: string = '';
+
+  // Stuff object for form binding
+  stuff: Stuff = {
+    id: 0,
+    name: '',
+    position: '',
+    start_from: '',
+    contact_normal: '',
+    address: '',
+    salary_wages: 0,
+    benifits: '',
+    vacation_peroid: 0,
+    training_records: '',
+    contact_emergency: '',
+    notes: '',
+    created_at: '',
+    updated_at: '',
+  };
 
   ngOnInit() {
     this.loadStuffs(this.currentPage, this.perPage);
@@ -120,7 +151,9 @@ export class StuffsComponent implements OnInit {
 
   loadStuffs(page: number, perPage: number) {
     this.http
-      .get<StuffsResponse>(`http://127.0.0.1:8000/api/our_stuffs?page=${page}&per_page=${perPage}`)
+      .get<StuffsResponse>(
+        `http://127.0.0.1:8000/api/our_stuffs?page=${page}&per_page=${perPage}`
+      )
       .subscribe((response) => {
         this.ourStuffs = response.stuffs.data;
         this.total = response.stuffs.total;
@@ -135,23 +168,290 @@ export class StuffsComponent implements OnInit {
     this.rows = event.rows;
     this.perPage = this.rows;
     this.loadStuffs(this.currentPage, this.rows);
-    console.log(event,'event');
-
   }
 
   openNew() {
+    this.resetStuffForm();
     this.showDialog = true;
   }
 
-  editStuff() {
-    this.showDialog = true;
+  resetStuffForm() {
+    this.stuff = {
+      id: 0,
+      name: '',
+      position: '',
+      start_from: '',
+      contact_normal: '',
+      address: '',
+      salary_wages: 0,
+      benifits: '',
+      vacation_peroid: 0,
+      training_records: '',
+      contact_emergency: '',
+      notes: '',
+      created_at: '',
+      updated_at: '',
+    };
   }
 
-  deleteSelectedStuff() {
+  editStuff(id: number) {
+    this.http
+      .get<{ message: string; stuff: Stuff }>(
+        `http://127.0.0.1:8000/api/our_stuffs/${id}/edit`
+      )
+      .subscribe({
+        next: (response) => {
+          this.stuff = response.stuff;
+          this.showDialog = true;
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to fetch stuff details for editing.',
+          });
+          console.error('Error fetching stuff details:', error);
+        },
+      });
+  }
+
+  createNewStuff() {
+    if (this.stuffForm.invalid) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Validation Error',
+        detail: 'Please fill all required fields.',
+      });
+      return;
+    }
+
+    const newStuffData = {
+      name: this.stuff.name,
+      position: this.stuff.position,
+      start_from: this.stuff.start_from,
+      contact_normal: this.stuff.contact_normal,
+      address: this.stuff.address,
+      salary_wages: this.stuff.salary_wages,
+      benifits: this.stuff.benifits,
+      vacation_peroid: this.stuff.vacation_peroid,
+      training_records: this.stuff.training_records,
+      contact_emergency: this.stuff.contact_emergency,
+      notes: this.stuff.notes,
+    };
+
+    this.http
+      .post<{ message: string; stuff: Stuff }>(
+        'http://127.0.0.1:8000/api/our_stuffs',
+        newStuffData
+      )
+      .subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: response.message,
+          });
+
+          this.loadStuffs(this.currentPage, this.rows);
+
+          this.showDialog = false;
+
+          this.resetStuffForm();
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to create new stuff. Please try again.',
+          });
+          console.error('Error creating new stuff:', error);
+        },
+      });
+  }
+
+  updateStuff() {
+    if (this.stuffForm.invalid) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Validation Error',
+        detail: 'Please fill all required fields.',
+      });
+      return;
+    }
+
+    const updatedStuff = {
+      name: this.stuff.name,
+      position: this.stuff.position,
+      start_from: this.stuff.start_from,
+      contact_normal: this.stuff.contact_normal,
+      address: this.stuff.address,
+      salary_wages: this.stuff.salary_wages,
+      benifits: this.stuff.benifits,
+      vacation_peroid: this.stuff.vacation_peroid,
+      training_records: this.stuff.training_records,
+      contact_emergency: this.stuff.contact_emergency,
+      notes: this.stuff.notes,
+    };
+
+    this.http
+      .put(
+        `http://127.0.0.1:8000/api/our_stuffs/${this.stuff.id}`,
+        updatedStuff
+      )
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Stuff updated successfully!',
+          });
+
+          // Reload the data to reflect the changes
+          this.loadStuffs(this.currentPage, this.rows);
+
+          // Close the dialog
+          this.showDialog = false;
+
+          // Reset the form
+          this.resetStuffForm();
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to update stuff. Please try again.',
+          });
+          console.error('Error updating stuff:', error);
+        },
+      });
+  }
+
+  deleteSelectedStuff(id: number) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected Stuff?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        // User confirmed deletion
+        this.http
+          .delete(`http://127.0.0.1:8000/api/our_stuffs/${id}`)
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Stuff deleted successfully!',
+              });
+
+              // Reload the data to reflect the changes
+              this.loadStuffs(this.currentPage, this.rows);
+            },
+            error: (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to delete stuff. Please try again.',
+              });
+              console.error('Error deleting stuff:', error);
+            },
+          });
+      },
+      reject: () => {
+        // User canceled deletion
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Cancelled',
+          detail: 'Deletion cancelled.',
+        });
+      },
     });
+  }
+
+  getSelectedStuffIds(): number[] {
+    // Filter the `ourStuffs` array to get selected items
+    return this.ourStuffs
+      .filter((stuff) => stuff.selected) // Only include items where `selected` is true
+      .map((stuff) => stuff.id); // Extract the IDs of the selected items
+  }
+
+  deleteMultipleStuff() {
+    // Get the selected stuff IDs
+    const selectedIds = this.getSelectedStuffIds();
+
+    if (selectedIds.length === 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'No Selection',
+        detail: 'Please select at least one stuff to delete.',
+      });
+      return;
+    }
+
+    // Show confirmation dialog
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected stuffs?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        // User confirmed deletion
+        this.http
+          .delete('http://127.0.0.1:8000/api/our_stuffs', {
+            body: { ids: selectedIds },
+          })
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Selected stuffs deleted successfully!',
+              });
+
+              // Reload the data to reflect the changes
+              this.loadStuffs(this.currentPage, this.rows);
+            },
+            error: (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to delete selected stuffs. Please try again.',
+              });
+              console.error('Error deleting stuffs:', error);
+            },
+          });
+      },
+      reject: () => {
+        // User canceled deletion
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Cancelled',
+          detail: 'Deletion cancelled.',
+        });
+      },
+    });
+  }
+
+  isAnyCheckboxSelected(): boolean {
+    return this.ourStuffs.some((stuff) => stuff.selected);
+  }
+
+  onCheckboxChange() {
+    this.cdr.detectChanges();
+  }
+
+  onSearch() {
+    if (!this.searchTerm) {
+      this.loadStuffs(this.currentPage, this.perPage);
+      return;
+    }
+
+    const filteredStuffs = this.ourStuffs.filter((stuff) =>
+      Object.values(stuff).some(
+        (value) =>
+          value &&
+          value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+      )
+    );
+
+    this.ourStuffs = filteredStuffs;
   }
 }
