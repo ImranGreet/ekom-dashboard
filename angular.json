@@ -85,9 +85,11 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+               "./public/_redirects",
               {
                 "glob": "**/*",
                 "input": "public"
+
               }
             ],
             "styles": [
