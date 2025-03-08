@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { StuffService } from '../../../services/stuff.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
+/*prime ng module*/
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Toolbar } from 'primeng/toolbar';
@@ -12,7 +12,6 @@ import { SelectModule } from 'primeng/select';
 import { RadioButton } from 'primeng/radiobutton';
 import { InputNumber } from 'primeng/inputnumber';
 import { ConfirmDialog } from 'primeng/confirmdialog';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { Checkbox } from 'primeng/checkbox';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
@@ -23,6 +22,10 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { ToastModule } from 'primeng/toast';
 import { Textarea } from 'primeng/textarea';
 import { Skeleton } from 'primeng/skeleton';
+
+/*service or api*/
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { StuffService } from '../../../services/stuff.service';
 
 interface Stuff {
   id: number;
@@ -95,7 +98,7 @@ interface Column {
     DatePickerModule,
     ToastModule,
     Textarea,
-    Skeleton
+    Skeleton,
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './stuffs.component.html',
@@ -141,8 +144,6 @@ export class StuffsComponent implements OnInit {
     updated_at: '',
   };
 
-
-
   ngOnInit() {
     this.loadStuffs(this.currentPage, this.perPage);
     this.cols = [
@@ -156,7 +157,6 @@ export class StuffsComponent implements OnInit {
   }
 
   loadStuffs(page: number, perPage: number) {
-
     this.http
       .get<StuffsResponse>(
         `http://127.0.0.1:8000/api/our_stuffs?page=${page}&per_page=${perPage}`
@@ -166,7 +166,6 @@ export class StuffsComponent implements OnInit {
         this.total = response.stuffs.total;
         this.currentPage = response.stuffs.current_page;
         this.first = (this.currentPage - 1) * this.rows;
-
       });
   }
 
@@ -202,29 +201,7 @@ export class StuffsComponent implements OnInit {
     };
   }
 
-  editStuff(id: number) {
 
-    this.http
-      .get<{ message: string; stuff: Stuff }>(
-        `http://127.0.0.1:8000/api/our_stuffs/${id}/edit`
-      )
-      .subscribe({
-        next: (response) => {
-          this.stuff = response.stuff;
-          this.showDialog = true;
-
-        },
-        error: (error) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to fetch stuff details for editing.',
-          });
-          console.error('Error fetching stuff details:', error);
-
-        },
-      });
-  }
 
   createNewStuff() {
     if (this.stuffForm.invalid) {
@@ -235,7 +212,6 @@ export class StuffsComponent implements OnInit {
       });
       return;
     }
-
 
     const newStuffData = {
       name: this.stuff.name,
@@ -266,7 +242,6 @@ export class StuffsComponent implements OnInit {
           this.loadStuffs(this.currentPage, this.rows);
           this.showDialog = false;
           this.resetStuffForm();
-
         },
         error: (error) => {
           this.messageService.add({
@@ -275,7 +250,27 @@ export class StuffsComponent implements OnInit {
             detail: 'Failed to create new stuff. Please try again.',
           });
           console.error('Error creating new stuff:', error);
+        },
+      });
+  }
 
+  editStuff(id: number) {
+    this.http
+      .get<{ message: string; stuff: Stuff }>(
+        `http://127.0.0.1:8000/api/our_stuffs/${id}/edit`
+      )
+      .subscribe({
+        next: (response) => {
+          this.stuff = response.stuff;
+          this.showDialog = true;
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to fetch stuff details for editing.',
+          });
+          console.error('Error fetching stuff details:', error);
         },
       });
   }
@@ -289,7 +284,6 @@ export class StuffsComponent implements OnInit {
       });
       return;
     }
-
 
     const updatedStuff = {
       name: this.stuff.name,
@@ -320,7 +314,6 @@ export class StuffsComponent implements OnInit {
           this.loadStuffs(this.currentPage, this.rows);
           this.showDialog = false;
           this.resetStuffForm();
-
         },
         error: (error) => {
           this.messageService.add({
@@ -329,7 +322,6 @@ export class StuffsComponent implements OnInit {
             detail: 'Failed to update stuff. Please try again.',
           });
           console.error('Error updating stuff:', error);
-
         },
       });
   }
@@ -340,7 +332,6 @@ export class StuffsComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
         this.http
           .delete(`http://127.0.0.1:8000/api/our_stuffs/${id}`)
           .subscribe({
@@ -351,7 +342,6 @@ export class StuffsComponent implements OnInit {
                 detail: 'Stuff deleted successfully!',
               });
               this.loadStuffs(this.currentPage, this.rows);
-
             },
             error: (error) => {
               this.messageService.add({
@@ -360,7 +350,6 @@ export class StuffsComponent implements OnInit {
                 detail: 'Failed to delete stuff. Please try again.',
               });
               console.error('Error deleting stuff:', error);
-
             },
           });
       },
@@ -397,7 +386,6 @@ export class StuffsComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
         this.http
           .delete('http://127.0.0.1:8000/api/our_stuffs', {
             body: { ids: selectedIds },
@@ -410,7 +398,6 @@ export class StuffsComponent implements OnInit {
                 detail: 'Selected stuffs deleted successfully!',
               });
               this.loadStuffs(this.currentPage, this.rows);
-
             },
             error: (error) => {
               this.messageService.add({
@@ -419,7 +406,6 @@ export class StuffsComponent implements OnInit {
                 detail: 'Failed to delete selected stuffs. Please try again.',
               });
               console.error('Error deleting stuffs:', error);
-              
             },
           });
       },
