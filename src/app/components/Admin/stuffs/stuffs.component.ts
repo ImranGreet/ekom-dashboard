@@ -13,9 +13,10 @@ import { InputNumber } from 'primeng/inputnumber';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Checkbox } from 'primeng/checkbox';
-import {IconField} from "primeng/iconfield";
-import {InputIcon} from "primeng/inputicon";
-import {InputText} from "primeng/inputtext";
+import { IconField } from "primeng/iconfield";
+import { InputIcon } from "primeng/inputicon";
+import { InputText } from "primeng/inputtext";
+import { Paginator } from 'primeng/paginator';
 
 interface Stuff {
   id: number;
@@ -81,34 +82,33 @@ interface Column {
     Checkbox,
     IconField,
     InputIcon,
-    InputText
+    InputText,
+    Paginator
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './stuffs.component.html',
   styleUrl: './stuffs.component.scss',
 })
 export class StuffsComponent implements OnInit {
-  constructor(private stuffService: StuffService,
+  constructor(
+    private stuffService: StuffService,
     private http: HttpClient,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-
-
   ) {}
 
   ourStuffs: Stuff[] = [];
   cols!: Column[];
   showDialog: boolean = false;
+  first: number = 0;
+  rows: number = 10;
+  total: number = 0;
+  currentPage: number = 1;
+  perPage = 20;
 
   ngOnInit() {
-    this.http
-      .get<StuffsResponse>(`http://127.0.0.1:8000/api/our_stuffs`)
-      .subscribe((response) => {
-        this.ourStuffs = response.stuffs.data;
-        console.log(this.ourStuffs, 'stuff');
-      });
+    this.loadStuffs(this.currentPage, this.perPage);
     this.cols = [
-
       { field: 'name', header: 'Name' },
       { field: 'position', header: 'Position' },
       { field: 'contact_emergency', header: 'Contact emergency' },
@@ -116,6 +116,27 @@ export class StuffsComponent implements OnInit {
       { field: 'vacation_peroid', header: 'Vacation Peroid' },
       { field: 'salary_wages', header: 'Salary Wages' },
     ];
+  }
+
+  loadStuffs(page: number, perPage: number) {
+    this.http
+      .get<StuffsResponse>(`http://127.0.0.1:8000/api/our_stuffs?page=${page}&per_page=${perPage}`)
+      .subscribe((response) => {
+        this.ourStuffs = response.stuffs.data;
+        this.total = response.stuffs.total;
+        this.currentPage = response.stuffs.current_page;
+        this.first = (this.currentPage - 1) * this.rows;
+      });
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.page + 1;
+    this.first = event.first;
+    this.rows = event.rows;
+    this.perPage = this.rows;
+    this.loadStuffs(this.currentPage, this.rows);
+    console.log(event,'event');
+
   }
 
   openNew() {

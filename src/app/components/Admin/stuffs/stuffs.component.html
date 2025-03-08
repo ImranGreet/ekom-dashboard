@@ -13,9 +13,7 @@
   <p-table
     #dt
     [value]="ourStuffs"
-    [rows]="10"
     [columns]="cols"
-    [paginator]="true"
     [globalFilterFields]="[
       'name',
       'country.name',
@@ -25,20 +23,12 @@
     [tableStyle]="{ 'min-width': '75rem' }"
     [rowHover]="true"
     dataKey="id"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true"
   >
     <ng-template #caption>
       <div class="flex items-center justify-between">
-
         <p-iconfield>
           <p-inputicon styleClass="pi pi-search" />
-          <input
-            pInputText
-            type="text"
-
-            placeholder="Search..."
-          />
+          <input pInputText type="text" placeholder="Search..." />
         </p-iconfield>
       </div>
     </ng-template>
@@ -54,7 +44,7 @@
     </ng-template>
     <ng-template #body let-rowData let-columns="columns">
       <tr>
-        <td><p-checkbox  [binary]="true" /></td>
+        <td><p-checkbox [binary]="true" /></td>
         <td *ngFor="let col of columns">
           {{ rowData[col.field] }}
         </td>
@@ -77,11 +67,6 @@
           </div>
         </td>
       </tr>
-    </ng-template>
-    <ng-template #summary>
-      <div class="flex items-center justify-between">
-        In total there are {{ ourStuffs ? ourStuffs.length : 0 }} Stuff.
-      </div>
     </ng-template>
   </p-table>
 
@@ -179,6 +164,16 @@
       <p-button label="Save" icon="pi pi-check" />
     </ng-template>
   </p-dialog>
+
+  <div class="card flex justify-center">
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="total"
+      [rowsPerPageOptions]="[10, 20]"
+    />
+  </div>
 
   <p-confirmDialog [style]="{ width: '450px' }" />
 </div>
