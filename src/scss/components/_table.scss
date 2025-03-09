@@ -18,7 +18,7 @@
 table,.p-table
 {
   thead{
-    background-color: red;
+    //background-color: red;
     tr{
       th{
         text-align: center;
@@ -32,6 +32,7 @@ table,.p-table
           text-align: center !important;
         }
         text-align: center;
+        text-transform: capitalize;
       }
     }
   }
