@@ -28,6 +28,9 @@ table,.p-table
   tbody{
     tr{
       td{
+        &:nth-child(1){
+          text-align: center !important;
+        }
         text-align: center;
       }
     }

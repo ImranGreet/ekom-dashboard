@@ -95,7 +95,7 @@
 
   <p-dialog
     [(visible)]="showDialog"
-    [style]="{ width: '450px' }"
+    [style]="{ width: '500px' }"
     [header]="stuff.id ? 'Edit Stuff' : 'Create New Stuff'"
     [modal]="true"
     [dismissableMask]="false"
@@ -235,10 +235,10 @@
           </div>
 
           <div>
-            <label for="notes" class="block font-bold mb-3">Notes</label>
+            <label for="additional_notes" class="block font-bold mb-3">Notes</label>
 
             <textarea
-              rows="5"
+              rows="3"
               cols="30"
               pTextarea
               [(ngModel)]="stuff.notes"
@@ -279,5 +279,5 @@
   </div>
 
   <!-- Confirm Dialog for Delete -->
-  <p-confirmDialog [style]="{ width: '450px' }" />
+  <p-confirmDialog [style]="{ width: '500px' }" />
 </div>
