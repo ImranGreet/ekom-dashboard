@@ -1,7 +1,7 @@
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh; // Full viewport height for smooth scrolling
+  height: 100vh;
 
   .topbar {
     position: fixed;
@@ -9,7 +9,7 @@
     right: 0;
     left: 0;
     background-color: #ffffff;
-    padding: 1.25rem; // 20px
+    padding: 1.25rem;
     z-index: 10;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
@@ -17,29 +17,25 @@
   .content-wrapper {
     display: flex;
     flex: 1;
-    margin-top: 4rem; // Adjust to match topbar height
+    margin-top: 4rem;
 
     .sidebar {
       position: fixed;
-      top: 4rem; // Below topbar
+      top: 4rem;
       left: 0;
       bottom: 0;
-      width: 250px; // Adjust sidebar width
+      width: 50px;
       background-color: #ffffff;
       z-index: 10;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .main-content {
-      margin-left: 250px; // Adjust for sidebar width
+      margin-left: 50px;
       flex: 1;
-      padding: 1rem; // Adjust padding
-      background-color: #f3f4f6; // Optional background color
-      overflow-y: auto; // Ensure scrollability for long content
+      padding: 1rem;
+      background-color: #f3f4f6;
+      overflow-y: auto;
     }
   }
 }
-
-
-
-
