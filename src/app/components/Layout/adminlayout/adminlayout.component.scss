@@ -39,3 +39,24 @@
     }
   }
 }
+
+
+
+
+.xen-topbar-position,.xen-footer-position{
+  position: fixed;
+  left: 0;
+  right: 0;
+  padding: 10px;
+
+}
+.xen-top-0{
+  top: 0;
+}
+.xen-bottom-0{
+  bottom: 0;
+}
+
+.xen-bg-head,.xen-bg-footer{
+  background-color: #a6daac;
+}

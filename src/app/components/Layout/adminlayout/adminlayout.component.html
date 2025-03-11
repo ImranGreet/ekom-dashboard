@@ -1,22 +1,49 @@
-<section class="layout">
-  <!-- Topbar -->
+<!-- <section class="layout">
   <div class="topbar">
     <app-topbar />
   </div>
 
-  <!-- Sidebar and Main Content -->
   <div class="content-wrapper">
-    <div class="sidebar">
-      <app-sidebar />
-      <button
-        class="xen-left-5px xen-bottom-1 xen-border-radius-5 xen-position-fixed xen-padding-8 xen-z-500"
-        style="background: teal; color: #fff"
-      >
-        <i class="pi pi-table"></i>
-      </button>
-    </div>
     <main class="main-content">
       <router-outlet />
     </main>
   </div>
-</section>
+
+  <ng-container *ngIf="showTilesContainer">
+    <div
+      class="xen-position-fixed xen-bottom-0 xen-border-gray xen-border-1px xen-border-radius-5 xen-top-80px"
+      style="
+        width: 500px;
+        background-color: #fff;
+        border: 1px solid red;
+        border-radius: 8px;
+      "
+    >
+      <app-tiles></app-tiles>
+    </div>
+  </ng-container>
+  <button
+    (click)="toggleTileContainer()"
+    class="xen-left-5px xen-bottom-1 xen-border-radius-5 xen-position-fixed xen-padding-8 xen-z-500"
+    style="background: teal; color: #fff"
+  >
+    <i class="pi pi-table"></i>
+  </button>
+  <app-footer></app-footer>
+</section> -->
+
+<div class="xen-topbar-position xen-top-0 xen-bg-head xen-z-500">
+  <app-topbar />
+</div>
+
+<main
+  style="max-height: 90vh; overflow-y: auto; margin-top: 50px; display: flex"
+>
+  <div style="flex-grow: 1">
+    <router-outlet />
+  </div>
+</main>
+
+<div class="xen-topbar-position xen-bottom-0 xen-bg-footer">
+  <app-footer></app-footer>
+</div>

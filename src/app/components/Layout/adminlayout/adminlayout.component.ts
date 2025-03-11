@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
-import { SidebarComponent } from '../../Admin/sidebar/sidebar.component';
+
 import { TopbarComponent } from '../../Admin/topbar/topbar.component';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TilesComponent } from '../../custom/tiles/tiles.component';
+import { FooterComponent } from '../../custom/footer/footer.component';
 
 @Component({
   selector: 'app-adminlayout',
   standalone: true,
-  imports: [SidebarComponent, TopbarComponent, RouterOutlet, CommonModule],
+  imports: [TopbarComponent, RouterOutlet, CommonModule, TilesComponent,FooterComponent],
   templateUrl: './adminlayout.component.html',
   styleUrl: './adminlayout.component.scss',
 })
-export class AdminlayoutComponent {}
+export class AdminlayoutComponent {
+  showTilesContainer: boolean = false;
+  toggleTileContainer(): void {
+    this.showTilesContainer = !this.showTilesContainer;
+  }
+}
