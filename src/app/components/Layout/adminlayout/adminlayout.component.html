@@ -44,6 +44,20 @@
   </div>
 </main>
 
+<ng-container *ngIf="showTilesContainer">
+  <div>
+    <app-tiles></app-tiles>
+  </div>
+</ng-container>
+
+<button
+  (click)="toggleTileContainer()"
+  class="xen-left-5px xen-bottom-1 xen-border-radius-5 xen-position-fixed xen-padding-10 xen-z-500 xen-d-flex xen-justify-content-center xen-align-items-center"
+  style="background: teal; color: #fff"
+>
+  <i class="pi pi-table xen-font-size-l"></i>
+</button>
+
 <div class="xen-topbar-position xen-bottom-0 xen-bg-footer">
   <app-footer></app-footer>
 </div>
