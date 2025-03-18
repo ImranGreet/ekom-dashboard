@@ -1,32 +1,13 @@
-<section class="xen-tiles border border-radius-10px">
-  <ng-template #caption>
-    <div class="flex items-center justify-between">
-      <p-iconfield>
-        <p-inputicon styleClass="pi pi-search" />
-        <input
-          pInputText
-          type="text"
-          placeholder="Search..."
-
-        />
-      </p-iconfield>
+<div class="modal-overlay">
+  <div class="modal-container" cdkDrag>
+    <div class="modal-header" cdkDragHandle>
+      <h2>Windows 11 Modal</h2>
+      <button (click)="closeModal()">X</button>
     </div>
-  </ng-template>
-
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-  <a routerLink="/our_stuff" class="card"> Stuff </a>
-</section>
+    <div class="modal-content">
+      <div class="draggable-item" cdkDrag>Item 1</div>
+      <div class="draggable-item" cdkDrag>Item 2</div>
+      <div class="draggable-item" cdkDrag>Item 3</div>
+    </div>
+  </div>
+</div>
