@@ -18,7 +18,10 @@ export const routes: Routes = [
         path: 'our_stuff',
         component: StuffsComponent
       },
-
+      {
+        path:'tiles',
+        component:TilesComponent
+      }
 
     ],
   },

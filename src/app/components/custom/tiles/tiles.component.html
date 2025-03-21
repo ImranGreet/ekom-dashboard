@@ -1,13 +1,16 @@
-<div class="modal-overlay">
-  <div class="modal-container" cdkDrag>
-    <div class="modal-header" cdkDragHandle>
-      <h2>Windows 11 Modal</h2>
-      <button (click)="closeModal()">X</button>
-    </div>
-    <div class="modal-content">
-      <div class="draggable-item" cdkDrag>Item 1</div>
-      <div class="draggable-item" cdkDrag>Item 2</div>
-      <div class="draggable-item" cdkDrag>Item 3</div>
+
+
+<div class="start-menu">
+  <div class="app-grid" cdkDropList [cdkDropListData]="apps" (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let app of apps" cdkDrag>{{ app }}</div>
+  </div>
+
+  <button (click)="createFolder()">Create Folder</button>
+
+  <div class="folder-grid">
+    <div *ngFor="let folder of folders" class="folder" cdkDropList [cdkDropListData]="folder.items" (cdkDropListDropped)="drop($event)">
+      <div class="folder-header" cdkDrag>{{ folder.name }}</div>
+      <div *ngFor="let item of folder.items" cdkDrag>{{ item }}</div>
     </div>
   </div>
 </div>
